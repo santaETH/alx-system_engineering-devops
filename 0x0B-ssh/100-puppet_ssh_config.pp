@@ -1,14 +1,15 @@
-#!/usr/bin/env puppet
 # Using Puppet to make changes to our configuration file.
 
-file { '/etc/ssh/ssh_config':
-   ensure => present
-   content => "
+include stdlib
 
-	# SSH client configuration
-	Host *
-		IdentityFile ~/.ssh/school
-		PasswordAuthentication no
-",
-
+file_line {
+  'password_auth':
+    ensure => present,
+    path   => '/etc/ssh/ssh_config',
+    line   => '    PasswordAuthentication no'
+  ;
+  'key_location':
+    ensure => present,
+    path   => '/etc/ssh/ssh_config',
+    line   => '    IdentityFile ~/.ssh/school'
 }
