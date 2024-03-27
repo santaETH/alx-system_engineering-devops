@@ -1,0 +1,5 @@
+# ~/.ssh/config
+
+Host 52.91.123.22
+     PasswordAuthentication no
+     IdentifyFile ~/.ssh/schhol
