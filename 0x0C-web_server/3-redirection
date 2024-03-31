@@ -6,8 +6,11 @@ sudo apt-get install -y nginx
 
 echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
 
-string_for_replacement='server_name_;\n\trewrite ^\/redirect_me https:\/\/github.com\/santaETH permanent;
-sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
-
-sudo service nginx restart
+string_for_replacement='
+	server_name_;\
+	rewrite ^\/redirect_me https:\/\/github.com\/santaETH permanent;\
+	'
+	sudo sed -i "/server_name _;/c\\$string_for_replacement" /etc/nginx/sites-enabled/default
+	
+	sudo service nginx restart
       
