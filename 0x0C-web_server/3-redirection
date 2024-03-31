@@ -18,7 +18,7 @@ SERVER_CONFIG=\
                 try_files \$uri \$uri/ =404;
         }
         if (\$request_filename ~ redirect_me){
-                rewrite ^ https://github.com/santaETH permanent;
+               sudo sed -i '24i\  rewrite ^/redirect_me https://github.com/santaETH permanent;
         }
 }"
 
