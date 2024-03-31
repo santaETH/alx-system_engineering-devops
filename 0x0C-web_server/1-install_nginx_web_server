@@ -9,23 +9,5 @@ sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
 echo "Hello World!" > /var/www/html/index.nginx-debian.html
 echo "<html><body>Hello World!</body></html>" > /var/www/html/index.html
-
-# Ensure Nginx serves "Hello World!" at its root
-sudo bash -c 'cat <<EOF > /var/www/html/index.html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello World!</title>
-</head>
-<body>
-    <h1>Hello World!</h1>
-</body>
-</html>
-EOF'
-
-# Modify Nginx configuration to listen on port 80 and return "Hello World!" at root
-sudo sed -i 's/\blisten 80;/listen 80 default_server;/g' /etc/nginx/sites-available/default
-sudo sed -i '/^#\? *root *.*; *$/a \ \ \ \ location / {\n\ \ \ \ \ \ \ \ echo "Hello World!";\n\ \ \ \ }\n' /etc/nginx/sites-available/default
-
-# Restart Nginx
+sed -i 's/\blisten 80;/listen 80 default_server;/g' /etc/nginx/sites-available/default
 sudo service nginx restart
