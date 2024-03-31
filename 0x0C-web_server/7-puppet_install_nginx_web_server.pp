@@ -11,7 +11,7 @@ file_line { 'install':
   line   => 'rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4;',
 }
 
-file { '/var/www/html/404.html':
+file { '/var/www/html/index.nginx-debian.html:
   content => 'Hello World!',
 }
 
