@@ -10,7 +10,7 @@ string_for_replacement='
 	server_name_;\
 	rewrite ^\/redirect_me https:\/\/github.com\/santaETH permanent;\
 	'
-	sudo sed -i "/server_name _;/c\\$string_for_replacement" /etc/nginx/sites-enabled/default
+sudo sed -i "/server_name _;/c\\$string_for_replacement" /etc/nginx/sites-enabled/default
 	
-	sudo service nginx restart
+sudo service nginx restart
       
