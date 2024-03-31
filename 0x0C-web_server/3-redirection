@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Configure your Nginx server so that /redirect_me is redirecting to another page
-
+# Configure your Nginx server so that /redirect_me is redirecting to another page.
 sudo apt-get update
 sudo apt-get install -y nginx
 sudo ufw allow 'Nginx HTTP'
 sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
 echo "Hello World!" > /var/www/html/index.nginx-debian.html
+
 SERVER_CONFIG=\
         "server {
         listen 80 default_server;
@@ -18,14 +18,14 @@ SERVER_CONFIG=\
                 try_files \$uri \$uri/ =404;
         }
         if (\$request_filename ~ redirect_me){
-                rewrite ^ https://sentayehu.santaeth.tech/ permanent;
+                rewrite ^ https://github.com/santaETH permanent;
         }
-}
+}"
 
 bash -c "echo -e '$SERVER_CONFIG' > /etc/nginx/sites-enabled/default"
 
 if [ "$(pgrep -c nginx)" -le 0 ]; then
-	service nginx start
+        sudo service nginx start
 else
-	service nginx restart
+        sudo service nginx restart
 fi
