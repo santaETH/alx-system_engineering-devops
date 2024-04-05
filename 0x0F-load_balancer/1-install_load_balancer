@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Bash script that configures a new Ubuntu machine
+# Configure HAproxy to send traffic to web-01 & web-02
+# Use roundrobin algorithm for distribution
+
+set -e
+
+# Check if running with root privileges
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run as root"
+    exit
+fi
+
+# Update package list
+apt-get -y update
+
+# Install HAProxy if not already installed
+if ! dpkg -s haproxy &> /dev/null; then
+    apt-get -y install haproxy
+fi
+
+# Configure HAProxy
+cat <<EOF >> /etc/haproxy/haproxy.cfg
+backend web-servers
+    balance roundrobin
+    option forwardfor
+    server 516045-web-01 100.27.13.1:80 check
+    server 516045-web-02 52.3.251.38:80 check
+
+frontend haproxy_balancer
+    bind *:80
+    mode http
+    default_backend web-servers
+EOF
+
+# Restart HAProxy service
+systemctl restart haproxy
