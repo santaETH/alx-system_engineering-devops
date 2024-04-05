@@ -1,4 +1,4 @@
-# Write configures a brand new Ubuntu machine to the requirements asked in this task
+# Installs an Nginx server with custom HTTP header
 
 exec { 'update':
   command => 'sudo apt-get -y update',
