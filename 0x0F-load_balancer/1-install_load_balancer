@@ -10,8 +10,7 @@ sudo apt-get -y update
 sudo apt-get -y install haproxy
 
 # Configure HAProxy
-printf %s "
->> /etc/haproxy/haproxy.cfg
+sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null <<EOT
 backend web-servers
     balance roundrobin
     option forwardfor
@@ -21,6 +20,8 @@ backend web-servers
 frontend haproxy_balancer
     bind *:80
     mode http
-" >> /etc/haproxy/haproxy.cfg
+    default_backend web-servers
+EOT
 
-service haproxy start
+# Start HAProxy
+sudo service haproxy start
