@@ -3,24 +3,15 @@
 # Configure HAproxy to send traffic to web-01 & web-02
 # Use roundrobin algorithm for distribution
 
-set -e
-
-# Check if running with root privileges
-if [ "$EUID" -ne 0 ]; then
-    echo "Please run as root"
-    exit
-fi
 
 # Update package list
-apt-get -y update
+sudo apt-get -y update
 
-# Install HAProxy if not already installed
-if ! dpkg -s haproxy &> /dev/null; then
-    apt-get -y install haproxy
-fi
+# Install HAProxy
+sudo apt-get -y install haproxy
 
-# Configure HAProxy
-cat <<EOF >> /etc/haproxy/haproxy.cfg
+# Configure HAproxy
+print %f "
 backend web-servers
     balance roundrobin
     option forwardfor
@@ -31,7 +22,7 @@ frontend haproxy_balancer
     bind *:80
     mode http
     default_backend web-servers
-EOF
+" >> /etc/haproxy/haproxy.cfg
 
-# Restart HAProxy service
-systemctl restart haproxy
+# Restart haproxy
+service haproxy restart
