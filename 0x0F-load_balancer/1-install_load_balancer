@@ -14,8 +14,8 @@ sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null <<EOT
 backend web-servers
     balance roundrobin
     option forwardfor
-    server 516045-web-01 100.27.13.1:80 check
-    server 516045-web-02 52.3.251.38:80 check
+    server 516045-web-01 23.23.75.93:80 check
+    server 516045-web-02 34.204.61.231:80 check
 
 frontend haproxy_balancer
     bind *:80
