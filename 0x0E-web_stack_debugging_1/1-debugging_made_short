@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
-# Configure nginx file and enable site dir, same as task #0, make your fix
 
-sudo apt install -y nginx
-sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
-sudo service nginx restart
+# Configure nginx file and enable site directory.
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default || true
+
+# Restart nginx
+sudo service nginx restart || true
+
+# Kill the first Nginx process
 kill "$(pgrep 'nginx' | head -n 1)" || true
