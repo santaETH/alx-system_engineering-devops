@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-# Configure nginx file and enable site dir
-
-sudo apt install -y nginx
-sudo sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
+# Configure nginx file and enable site dir & stop nginx service.
+sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
 sudo service nginx restart
 sudo service nginx stop
