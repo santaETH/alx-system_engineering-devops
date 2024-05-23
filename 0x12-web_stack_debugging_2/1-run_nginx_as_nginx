@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Write a Bash script that configures the container nginx.
+
+chmod 644 /etc/nginx/nginx.conf
+sed -Ei 's/\s*#?\s*user .*/user nginx;/' /etc/nginx/nginx.conf
+sed -Ei 's/(listen (\[::\]:)?80) /\180 /' /etc/nginx/sites-enabled/default
+pkill haproxy
+# Start Nginx as the nginx user
+su -s /bin/bash -c 'nginx -g "daemon off;"' nginx
