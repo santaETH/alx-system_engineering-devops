@@ -1,7 +1,18 @@
 #!/usr/bin/env bash
 # Write a Bash script that configures the container nginx.
+
+# Fix permissions on nginx.conf if necessary
 chmod 644 /etc/nginx/nginx.conf
+
+# Ensure Nginx runs as the nginx user
 sed -Ei 's/\s*#?\s*user .*/user nginx;/' /etc/nginx/nginx.conf
-sed -Ei 's/(listen (\[::\]:)?80) /\180 /' /etc/nginx/sites-enabled/default
+
+# Ensure Nginx listens on port 8080 instead of 80
+sed -Ei 's/listen\s+80;/listen 8080;/g' /etc/nginx/sites-enabled/default
+sed -Ei 's/listen\s+\[::\]:80;/listen [::]:8080;/g' /etc/nginx/sites-enabled/default
+
+# Stop Apache2 if it's running to avoid port conflicts
 pkill apache2
-su nginx -s /bin/bash -C 'service nginx restart'
+
+# Start Nginx as the nginx user
+su -s /bin/bash -c 'nginx -g "daemon off;"' nginx
